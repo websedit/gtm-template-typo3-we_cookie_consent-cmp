@@ -15,5 +15,5 @@
 homepage: "https://consent.websedit.de/"
 documentation: "https://consent.websedit.de/dokumentation"
 versions:
-  - sha: a9112ad27aa75a922bd953fe815d683f58207fe1
+  - sha: 1cac394641e29db67d38888bc63dd97d2fd021b8
     changeNotes: Initial Version
