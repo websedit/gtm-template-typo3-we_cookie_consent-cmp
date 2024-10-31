@@ -15,5 +15,9 @@
 homepage: "https://consent.websedit.de/"
 documentation: "https://consent.websedit.de/dokumentation"
 versions:
+  # Latest version
+  - sha: 123fe3505c7968f479545c68e1c835236f203609
+    changeNotes: Change brand id and customize permissions for cookies. Fix the reading of cookie values.
+  # Older versions
   - sha: 1cac394641e29db67d38888bc63dd97d2fd021b8
     changeNotes: Initial Version
