@@ -317,9 +317,10 @@ if(!hasDefaultState) {
  * Sets up the consent update callback
  */
 const main = () => {
-  // Check if cookie is set and has values that correspond to Google consent
-  // types. If it does, run onUserConsent().
+  // Check if cookie or dataLayer is set and has values that correspond to Google consent types.
+  // If it does, run onUserConsent().
 
+  // A) Read consent states from the cookie
   let cookieValues;
   if (queryPermission('get_cookies', cookieName)) {
     cookieValues = getCookieValues(cookieName);
@@ -328,6 +329,7 @@ const main = () => {
     let consentString = cookieValues[0];
     
     if (consentString) {
+      // Cookie available - process its content
       let decodedConsentString = decodeUriComponent(consentString);
       let cookieData = JSON.parse(decodedConsentString);
     
@@ -344,6 +346,19 @@ const main = () => {
       };
       onUserConsent(consentData);
     }
+  } else if (data.we_consent_state) {
+    // B) No cookie available: Fallback to payload of the custom event
+    const cs = data.we_consent_state;
+    const consentData = {
+      adConsentGranted                : cs.ad_storage,
+      adUserDataConsentGranted        : cs.ad_user_data,
+      adPersonalizationConsentGranted : cs.ad_personalization,
+      analyticsConsentGranted         : cs.analytics_storage,
+      functionalityConsentGranted     : cs.functionality_storage,
+      personalizationConsentGranted   : cs.personalization_storage,
+      securityConsentGranted          : true,
+    };
+    onUserConsent(consentData);
   }
   data.gtmOnSuccess();
 };
